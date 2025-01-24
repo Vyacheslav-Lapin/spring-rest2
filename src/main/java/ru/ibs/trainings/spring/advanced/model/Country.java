@@ -1,5 +1,6 @@
-package com.luxoft.springadvanced.springrest.model;
+package ru.ibs.trainings.spring.advanced.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -16,6 +17,7 @@ import static ru.ibs.trainings.spring.advanced.common.HibernateUtils.*;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor(access = PROTECTED) // avoid "No default constructor for entity"
+@JsonPropertyOrder({"name", "codeName"})
 @SuppressWarnings({"com.intellij.jpb.LombokDataInspection", "com.haulmont.ampjpb.LombokDataInspection"})
 public class Country {
 
@@ -27,7 +29,6 @@ public class Country {
     public final boolean equals(Object o) {
       return this == o || o instanceof Country country
                           && effectiveClass(this) == effectiveClass(country)
-                          && getCodeName() != null
                           && Objects.equals(getCodeName(), country.getCodeName());
     }
 

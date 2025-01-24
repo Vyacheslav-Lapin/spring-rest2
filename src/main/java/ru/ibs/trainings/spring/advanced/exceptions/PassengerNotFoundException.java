@@ -1,4 +1,4 @@
-package com.luxoft.springadvanced.springrest.exceptions;
+package ru.ibs.trainings.spring.advanced.exceptions;
 
 public class PassengerNotFoundException extends RuntimeException {
 

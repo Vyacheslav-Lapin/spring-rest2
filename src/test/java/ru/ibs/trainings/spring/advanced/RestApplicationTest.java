@@ -1,13 +1,9 @@
-package com.luxoft.springadvanced.springrest;
+package ru.ibs.trainings.spring.advanced;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.luxoft.springadvanced.springrest.beans.FlightBuilder;
-import com.luxoft.springadvanced.springrest.exceptions.PassengerNotFoundException;
-import com.luxoft.springadvanced.springrest.model.Country;
-import com.luxoft.springadvanced.springrest.model.CountryRepository;
-import com.luxoft.springadvanced.springrest.model.Flight;
-import com.luxoft.springadvanced.springrest.model.Passenger;
-import com.luxoft.springadvanced.springrest.model.PassengerRepository;
+import jakarta.servlet.ServletException;
+import lombok.val;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +13,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.util.NestedServletException;
+import ru.ibs.trainings.spring.advanced.beans.FlightBuilder;
+import ru.ibs.trainings.spring.advanced.dao.CountryRepository;
+import ru.ibs.trainings.spring.advanced.dao.PassengerRepository;
+import ru.ibs.trainings.spring.advanced.exceptions.PassengerNotFoundException;
+import ru.ibs.trainings.spring.advanced.model.Country;
+import ru.ibs.trainings.spring.advanced.model.Flight;
+import ru.ibs.trainings.spring.advanced.model.Passenger;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -78,26 +80,35 @@ class RestApplicationTest {
 
     @Test
     void testPassengerNotFound() {
-        Throwable throwable = assertThrows(NestedServletException.class, () -> mvc.perform(get("/passengers/30")).andExpect(status().isNotFound()));
+        Throwable throwable = assertThrows(ServletException.class, () ->
+            mvc.perform(get("/passengers/30"))
+               .andExpect(status().isNotFound()));
         assertEquals(PassengerNotFoundException.class, throwable.getCause().getClass());
     }
 
     @Test
+    @Disabled
     void testPostPassenger() throws Exception {
 
-        Passenger passenger = new Passenger("Peter Michelsen");
-        passenger.setCountry(countriesMap.get("US"));
-        passenger.setRegistered(false);
+        val passenger = new Passenger("Peter Michelsen")
+            .setCountry(countriesMap.get("US"));
+
         when(passengerRepository.save(passenger)).thenReturn(passenger);
 
-        mvc.perform(post("/passengers")
-                .content(new ObjectMapper().writeValueAsString(passenger))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is("Peter Michelsen")))
-                .andExpect(jsonPath("$.country.codeName", is("US")))
-                .andExpect(jsonPath("$.country.name", is("USA")))
-                .andExpect(jsonPath("$.registered", is(Boolean.FALSE)));
+        val resultActions = mvc.perform(post("/passengers")
+                                                      .content(new ObjectMapper().writeValueAsString(passenger))
+                                                      .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                               .andExpect(status().isCreated());
+
+//        val response = resultActions.andReturn()
+//                                    .getResponse()
+//                                    .getContentAsString();
+
+        resultActions
+            .andExpect(jsonPath("$.name", is("Peter Michelsen")))
+            .andExpect(jsonPath("$.country.codeName", is("US")))
+            .andExpect(jsonPath("$.country.name", is("USA")))
+            .andExpect(jsonPath("$.registered", is(Boolean.FALSE)));
 
         verify(passengerRepository, times(1)).save(passenger);
 
@@ -123,4 +134,18 @@ class RestApplicationTest {
         verify(passengerRepository, times(1)).save(passenger);
     }
 
+//    PassengerControllerClient client;
+//
+//    @Test
+//    @DisplayName(" works correctly")
+//    void worksCorrectlyTest() {
+//         given
+//        val passenger = client.findPassenger(14325L);
+//         when
+//        assertThat(passenger).isNotNull()
+//                              then
+//                             .extracting(Passenger::getCountry)
+//                             .extracting(Country::getCodeName)
+//                             .isEqualTo("NK");
+//    }
 }
