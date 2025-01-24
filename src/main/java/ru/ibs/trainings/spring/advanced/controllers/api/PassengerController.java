@@ -1,6 +1,7 @@
 package ru.ibs.trainings.spring.advanced.controllers.api;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import java.util.Map;
 public interface PassengerController {
 
   @GetMapping("/passengers")
-  List<Passenger> findAll();
+  ResponseEntity<List<Passenger>> findAll();
 
   @PostMapping("/passengers")
   @ResponseStatus(HttpStatus.CREATED)

@@ -1,6 +1,8 @@
 package ru.ibs.trainings.spring.advanced.controllers.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ibs.trainings.spring.advanced.controllers.api.PassengerController;
 import ru.ibs.trainings.spring.advanced.dao.PassengerRepository;
@@ -20,8 +22,9 @@ public class PassengerControllerImpl implements PassengerController {
   final Map<String, Country> countriesMap;
 
   @Override
-  public List<Passenger> findAll() {
-    return repository.findAll();
+  public ResponseEntity<List<Passenger>> findAll() {
+    val all = repository.findAll();
+    return all.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(all);
   }
 
   @Override
