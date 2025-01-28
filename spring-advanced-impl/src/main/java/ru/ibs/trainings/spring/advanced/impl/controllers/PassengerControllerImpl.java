@@ -1,4 +1,4 @@
-package ru.ibs.trainings.spring.advanced.impl.controllers.impl;
+package ru.ibs.trainings.spring.advanced.impl.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;

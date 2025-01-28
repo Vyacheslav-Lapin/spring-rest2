@@ -8,12 +8,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import lombok.val;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import ru.ibs.trainings.spring.api.CountryController;
 import ru.ibs.trainings.spring.dto.CountryDto;
 import ru.ibs.trainings.spring.stub.common.CsvUtils;
 
 import java.util.List;
 
+@Primary
+@Component
 @RequiredArgsConstructor
 @Accessors(fluent = true)
 public class CountryClientStub implements CountryController {
