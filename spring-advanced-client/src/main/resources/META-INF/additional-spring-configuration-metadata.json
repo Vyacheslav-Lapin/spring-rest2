@@ -5,7 +5,7 @@
       "name": "client.url",
       "type": "java.lang.String",
       "description": "Host and port of the url address of the server to which this library will be used to access.",
-      "defaultValue": "https://localhost:${server.port}"
+      "defaultValue": "https://localhost:8081"
     },
     {
       "name": "client.contextPath",
