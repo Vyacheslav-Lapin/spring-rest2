@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+
+  <parent>
+    <groupId>ru.ibs.trainings.spring</groupId>
+    <artifactId>spring-advanced</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>spring-advanced-stub</artifactId>
+
+  <properties>
+    <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>ru.ibs.trainings.spring</groupId>
+      <artifactId>spring-advanced-api</artifactId>
+    </dependency>
+  </dependencies>
+
+  <modelVersion>4.0.0</modelVersion>
+</project>
