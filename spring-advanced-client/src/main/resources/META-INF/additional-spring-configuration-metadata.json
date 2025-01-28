@@ -1,0 +1,18 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "client.url",
+      "type": "java.lang.String",
+      "description": "Host and port of the url address of the server to which this library will be used to access.",
+      "defaultValue": "https://localhost:${server.port}"
+    },
+    {
+      "name": "client.contextPath",
+      "type": "java.lang.String",
+      "description": "Common for all endpoints part of the path. If the counterparty is a sprig application, it is best to specify the server.servlet.contextPath property.",
+      "defaultValue": "/api"
+    }
+  ],
+  "hints": []
+}

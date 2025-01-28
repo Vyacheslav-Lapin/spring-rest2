@@ -2,6 +2,7 @@ package ru.ibs.trainings.spring.advanced.impl.beans;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.Cleanup;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import static ru.ibs.trainings.spring.advanced.impl.common.CsvUtils.*;
 @Configuration
 public class FlightConfig {
 
+    @Getter(onMethod_ = @Bean)
     Map<String, CountryDto> countriesMap;
 
     @SneakyThrows
@@ -44,10 +46,5 @@ public class FlightConfig {
                                 .forEach(flightDtoBuilder::passenger);
 
         return flightDtoBuilder.build();
-    }
-
-    @Bean
-    Map<String, CountryDto> getCountriesMap() {
-        return this.countriesMap;
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ibs.trainings.spring.advanced.impl.dao.PassengerRepository;
 import ru.ibs.trainings.spring.advanced.impl.exceptions.PassengerNotFoundException;
@@ -40,8 +41,13 @@ public class PassengerControllerImpl implements PassengerController {
   }
 
   @Override
-  public PassengerDto createPassenger(PassengerDto passenger) {
-    return repository.save(passenger.toPassengerEntity()).toPassengerDto();
+  public ResponseEntity<PassengerDto> createPassenger(PassengerDto passenger, Errors errors) {
+    if (errors.hasErrors()) {
+      return ResponseEntity.badRequest().build();
+    }
+    val passengerDto = repository.save(passenger.toPassengerEntity())
+                                          .toPassengerDto();
+    return ResponseEntity.ok(passengerDto);
   }
 
   @Override

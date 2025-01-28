@@ -2,6 +2,7 @@ package ru.ibs.trainings.spring.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ public interface PassengerController {
 
   @PostMapping("/passengers")
   @ResponseStatus(HttpStatus.CREATED)
-  PassengerDto createPassenger(@RequestBody PassengerDto passenger);
+  ResponseEntity<PassengerDto> createPassenger(@RequestBody PassengerDto passenger, Errors errors);
 
   @GetMapping("/passengers/{id}")
   PassengerDto findPassenger(@PathVariable Long id);
